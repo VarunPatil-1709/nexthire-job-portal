@@ -45,8 +45,8 @@ public class AuthController {
         ResponseCookie accessCookie = ResponseCookie.from(
                         "accessToken", authResponse.getAccessToken())
                 .httpOnly(true)
-                .secure(false)          // ✅ localhost
-                .sameSite("Lax")        // ✅ allows cross-port
+                .secure(false)          
+                .sameSite("Lax")        
                 .path("/")
                 .maxAge(900)
                 .build();
@@ -96,7 +96,7 @@ public class AuthController {
 
         ResponseCookie clearAccess = ResponseCookie.from("accessToken", "")
                 .httpOnly(true)
-                .secure(true)          // false only for localhost
+                .secure(true)          
                 .sameSite("Strict")
                 .path("/")
                 .maxAge(0)
@@ -106,7 +106,7 @@ public class AuthController {
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
-                .path("/")             // ✅ MUST MATCH ORIGINAL PATH
+                .path("/")             
                 .maxAge(0)
                 .build();
 
