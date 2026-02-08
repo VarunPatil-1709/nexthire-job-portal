@@ -1,14 +1,17 @@
 # Job Portal Backend – Microservices Architecture
 
-A production-style **microservices-based Job Portal backend** built using **Spring Boot**.  
-This project is designed to demonstrate **real-world backend engineering concepts** such as:
+🎥 **Project Demo (Full Flow Walkthrough):**  
+👉 [https://your-demo-link-here](https://drive.google.com/drive/folders/1RRqg0VzPoCwTNPQHaHuSApRUauhdaafC)
 
-- JWT & Refresh Token authentication
-- Event-driven architecture using Kafka
-- Outbox & idempotent consumer patterns
-- Real-time chat using WebSockets
-- Secure file handling with AWS S3
-- Clean separation of concerns across services
+A production-style **microservices-based Job Portal backend** built using **Spring Boot**, designed to demonstrate **real-world backend engineering practices**, including:
+
+- JWT & Refresh Token–based authentication
+- Event-driven communication using Kafka
+- Outbox pattern and idempotent consumers
+- Real-time messaging using WebSockets
+- Secure file storage with AWS S3
+- Clear service boundaries and clean separation of concerns
+
 
 ---
 
