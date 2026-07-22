@@ -23,7 +23,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    /* ================= SIGNUP ================= */
+
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody AuthUserRequest  request) {
@@ -33,7 +33,7 @@ public class AuthController {
         return ResponseEntity.ok("Signup successful");
     }
 
-    /* ================= LOGIN ================= */
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(
@@ -65,7 +65,7 @@ public class AuthController {
 
         return ResponseEntity.ok("LOGIN_SUCCESS");
     }
-    /* ================= REFRESH ================= */
+
 
     @PostMapping("/refresh")
     public ResponseEntity<String> refresh(
@@ -90,7 +90,6 @@ public class AuthController {
 
 
 
-    /* ================= LOGOUT ================= */
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
 
