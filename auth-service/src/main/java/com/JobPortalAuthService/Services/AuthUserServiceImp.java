@@ -51,37 +51,6 @@ public class AuthUserServiceImp implements AuthUserService {
         this.objectMapper = objectMapper;
     }
     
-/*    
-	@Override
-	@Transactional
-	public void signup(AuthUserRequest request) {
-
-	    if (authUserRepository.existsByEmail(request.getEmail())) {
-	        throw new RuntimeException("Email already registered");
-	    }
-
-	    // 1️⃣ Save Auth User
-	    AuthUser user = new AuthUser();
-	    user.setEmail(request.getEmail());
-	    user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-	    user.setRole(request.getRole());
-
-	    AuthUser savedUser = authUserRepository.save(user);
-
-	    // 2️⃣ Build Kafka Event
-	    // 2️⃣ Build Kafka Event (BUSINESS IDENTITY)
-	    UserCreatedEvent event = new UserCreatedEvent(
-	        "USER_CREATED_" + savedUser.getAuthId(),   // eventId ✅
-	        "USER_CREATED",                            // eventType ✅
-	        Instant.now(),                             // timestamp ✅
-	        savedUser.getAuthId(),
-	        savedUser.getEmail(),
-	        savedUser.getRole().name()
-	    );
-
-	    // 3️⃣ Publish Kafka event
-	    userEventProducer.sendUserCreatedEvent(event);
-	}
 
     
     @Override
@@ -91,8 +60,6 @@ public class AuthUserServiceImp implements AuthUserService {
         if (authUserRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
         }
-
-        // 1️⃣ Save Auth User
         AuthUser user = new AuthUser();
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
@@ -100,42 +67,6 @@ public class AuthUserServiceImp implements AuthUserService {
 
         AuthUser savedUser = authUserRepository.save(user);
 
-        // 2️⃣ Build domain event (SAME as before)
-        UserCreatedEvent event = new UserCreatedEvent(
-            "USER_CREATED_" + savedUser.getAuthId(),
-            "USER_CREATED",
-            Instant.now(),
-            savedUser.getAuthId(),
-            savedUser.getEmail(),
-            savedUser.getRole().name()
-        );
-
-        // 3️⃣ SAVE EVENT TO OUTBOX (THIS IS THE CHANGE)
-        outboxService.saveEvent(
-            event.getEventId(),
-            event.getEventType(),
-            new ObjectMapper().writeValueAsString(event)
-        );
-    }
-*/
-    
-    @Override
-    @Transactional
-    public void signup(AuthUserRequest request) {
-
-        if (authUserRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered");
-        }
-
-        // 1️⃣ Save Auth User
-        AuthUser user = new AuthUser();
-        user.setEmail(request.getEmail());
-        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
-
-        AuthUser savedUser = authUserRepository.save(user);
-
-        // 2️⃣ Build domain event
         UserCreatedEvent event = new UserCreatedEvent(
                 "USER_CREATED_" + savedUser.getAuthId(),
                 "USER_CREATED",
@@ -145,7 +76,6 @@ public class AuthUserServiceImp implements AuthUserService {
                 savedUser.getRole().name()
         );
 
-        // 3️⃣ Serialize + save to outbox (SAFE)
         try {
             String payload = objectMapper.writeValueAsString(event);
 
@@ -210,7 +140,7 @@ public class AuthUserServiceImp implements AuthUserService {
 	    String newAccessToken =
 	            jwtUtil.generateToken(user.getAuthId(), user.getRole().name());
 
-	    // 🔴 DO NOT touch refresh token
+
 	    return new AuthUserResponse(
 	            newAccessToken,
 	            refreshToken,              // SAME refresh token
