@@ -20,7 +20,7 @@ public class JwtUtilFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    // ✅ PUBLIC constructor
+
     public JwtUtilFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
@@ -34,7 +34,7 @@ public class JwtUtilFilter extends OncePerRequestFilter {
 
         String header = request.getHeader("Authorization");
 
-        // ✅ Correct Bearer check
+
         if (header != null && header.startsWith("Bearer ")) {
 
             String token = header.substring(7);
