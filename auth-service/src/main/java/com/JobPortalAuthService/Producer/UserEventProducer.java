@@ -9,43 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.JobPortalAuthService.Repo.OutboxRepository;
-/*
-@Service
-public class UserEventProducer {
 
-    private static final String TOPIC = "user-created-topic";
-
-    private final KafkaTemplate<String, UserCreatedEvent> kafkaTemplate;
-
-    
-    private final OutboxRepository outboxRepository;
-
-    public UserEventProducer(KafkaTemplate<String, UserCreatedEvent> kafkaTemplate, OutboxRepository outboxRepository) {
-        this.kafkaTemplate = kafkaTemplate;
-        this.outboxRepository = outboxRepository;
-    }
-
-//    public void sendUserCreatedEvent(UserCreatedEvent event) {
-//        kafkaTemplate.send(TOPIC, event);
-//   }
-    @Scheduled(fixedDelay = 5000)
-    public void publishOutboxEvents() {
-
-        List<OutboxEvent> events =
-                outboxRepository.findTop20ByStatus("NEW");
-
-        for (OutboxEvent event : events) {
-            try {
-                kafkaTemplate.send(TOPIC, event.getPayload());
-                event.setStatus("SENT");
-            } catch (Exception ex) {
-                event.setStatus("FAILED");
-            }
-            outboxRepository.save(event);
-        }
-    }
-    
-    */
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
